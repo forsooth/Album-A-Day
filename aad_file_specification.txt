@@ -1,0 +1,185 @@
+================================================================================
+
+AAD File Format Specification
+
+================================================================================
+
+                ------------------------------------------
+                |               SUMMARY:                 |
+                | This is the description of the layout  |
+                | of a valid *.aad file, the filetype    |
+                | and simple text layout system for the  |
+                |              aad program.              |   
+                ------------------------------------------
+                             (TLDR at bottom)
+
+===================
+  SPECIFICATION
+===================
+
+
+1.  Lines are read, and any line not beginning with a hyphen or digit is 
+    discarded.
+
+
+2.  A line beginning with a hyphen denotes the beginning of a new month. 
+
+
+3.  The line beginning with the hyphen is discarded, and the line immediately 
+    after it is parsed. This line is assumed to be the data defining a new 
+    month.
+
+
+4.  A month is defined by a month name, and a year. 
+
+
+5.  The month name must be one of the 12 standard months, January to December. 
+    The case does not matter, but the full month name must be typed. 
+
+
+6.  The year must be positive and between 10 and 9999. 
+
+
+7.  The name and year must be separated by whitespace.
+
+
+8.  The line immediately following the month name/year data entry is discarded
+    and assumed to contain no meaningful information.
+
+
+9.  Once a month is defined, lines beginning with digits are parsed. A line 
+    beginning with a digit is assumed to be the definition of the data for a new
+    album, corresponding to one day of the calendar. 
+
+
+10. The data are hyphen-delimited, and must appear in the following order:
+    Day - Artist Name - Album Title - Year of Release
+
+11. The day must be within the range of days for the month, or the line will be
+    discarded.
+
+12. The case of the artist name and album title are to be written as they will
+    appear on the final calendar.
+
+13. Additional data, such as album ratings or comments, may be added in 
+    additional hyphen blocks after the year and will be ignored.
+
+14. Whitespace around the hyphens will be trimmed and ignored.
+
+15. The year must be a positive integer between 10 and 9999.
+
+16. The year must be enclosed in parentheses.
+
+17. Any day declaration containing a duplicate day will overwrite the previous
+    data and cause an error warning to be issued. 
+
+18. Any day declaration before a month has been defined will issue an error 
+    warning and be ignored.
+
+19. The string "END" alone on a line will cause the reading of data to halt. 
+    This can allow additional data not in the AAD format to be stored at the end
+    of the file, such as another list of albums, or a wishlist. "END" must start
+    at character zero, be in all caps, etc.
+
+20. The file is read one byte at a time, and assumes one byte is one character
+    (a restriction of the CImg library). Because of this, UTF-8 and other 
+    Unicode-based encodings will work, but will not appear as written for some
+    non-latin characters. An encoding with the ISO-8859-1 character set will
+    function.
+
+===================
+  NOTES
+===================
+
+There is no escape character for the hyphen, so if there are hyphens in artist
+or album names, they should be removed or replaced.
+
+
+
+===================
+  EXAMPLES
+===================
+
+EXAMPLE 1: This defines two months, each with two albums.
+           This example uses the minimal amount of characters to define 
+           the AAD file while maintaining the standard.
+
+  --------------------------------FILE BEGIN----------------------------------
+
+-
+June 2015
+
+1-The Antlers-Hospice-(2009)
+30-Car Seat Headrest-Twin Fantasy-(2011)
+-
+semptember 2015
+2-Neutral Milk Hotel-In The Aeroplane Over The Sea-(1998)
+15-The Microphones-The Glow Pt. 2-(2001)
+
+  ---------------------------------FILE END-----------------------------------
+
+        However, this example isn't very visually appealing. A more realistic
+        example follows. 
+
+
+
+
+EXAMPLE 2: This defines two months, each with two albums.
+           This example maintains the standard while looking nice.
+
+  --------------------------------FILE BEGIN----------------------------------
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+=-=-=                                                                   =-=-=
+=-=-=                             1 ALBUM/DAY                           =-=-=
+=-=-=     Day Number - Artist - Album - (Year of Release) - Rating      =-=-=
+=-=-=                                                                   =-=-=
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Summer of 2015
+
+--------------------------------
+JUNE 2015
+--------------------------------
+
+1 - The Antlers - Hospice - (2009) - 10/10
+30 - Car Seat Headrest - Twin Fantasy - (2011) - 10/10
+
+
+--------------------------------
+SEPTEMBER 2015
+--------------------------------
+2 - Neutral Milk Hotel - In The Aeroplane Over The Sea - (1998) - 10/10
+15 - The Microphones - The Glow Pt. 2 - (2001) - 10/10
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+END
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+--------------------------------
+ALBUMS TO LISTEN TO AGAIN
+--------------------------------
+Arcade Fire - Reflektor - (2013)
+Flying Lotus - Cosmogramma - (2010)
+Slint - Spiderland - (1991)
+
+  ---------------------------------FILE END-----------------------------------
+
+
+        As can be seen above, the format allows for quite some flexibility.
+
+
+===================
+  TLDR / OVERVIEW
+===================
+
+If a line doesn't start with '-' or a digit, it is ignored.
+If a line DOES start with '-' a new month is created.
+When a new month is created, the next line MUST be the month name / year.
+The line after that stuff is discarded.
+When a month has been created, a line starting with a digit will add an album.
+Album data is given by hyphen-delimited blocks in the order:
+        Day of Month - Artist - Title - (Year)
+with the year in parentheses.
+The word "END" at the beginning of a line, in all caps, ends the reading.
+The end of the file also ends the reading. 
