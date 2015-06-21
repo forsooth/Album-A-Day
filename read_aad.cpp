@@ -182,6 +182,9 @@ std::vector<Month*> AAD_Reader::extract_months()
                         
         }
 
+        if (curr_month != NULL) 
+                months.push_back(curr_month);
+
         in.close();
         return months;
 }

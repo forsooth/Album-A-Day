@@ -1,0 +1,15 @@
+Preprocessor Variables
+
+Using g++, compile with the -D option to enable these changes to the program.
+        
+        Ex.
+        $ g++ -DDEBUG_READ (files) -o aad (libraries)
+
+DEBUG_READ       -  prints debug information for reading the input file
+DEBUG_ART        -  prints debug information for fetching art from the internet
+DEBUG_REMOVE     -  prints debug information for removing images from disk
+QUERY_EXTRA      -  adds "album cover" to the search query - results may vary
+DEBUG_WRITE      -  prints debug information for writing images
+DEBUX_WRITE_HEX  -  prints to stderr some strings as hex when writing the images
+SAVE_OFTEN       -  saves the image as "cal.jpg" after each album is added
+DISPLAY_OFTEN    -  Displays the image after each month is finished

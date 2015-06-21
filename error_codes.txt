@@ -1,0 +1,132 @@
+
+                                ERROR CODES
+
+--------------------------------------------------------------------------------
+ERROR 000: 
+        Step: Initializing program.
+        Information: Not enough command line arguments to have a file name.
+        Action Taken: Program exits.
+--------------------------------------------------------------------------------
+ERROR 001: 
+        Step: Processing file data.
+        Information: Album had an invalid year, likely negative or too large.
+        Action Taken: Year set to zero.
+--------------------------------------------------------------------------------
+ERROR 002: 
+        Step: Processing file data.
+        Information: Month name was shorter than 3 chars (May is the shortest
+                     month).
+        Action Taken: Month name set to "January".
+--------------------------------------------------------------------------------
+ERROR 003: 
+        Step: Processing file data.
+        Information: Month was created with an invalid year, likely negative or
+                     too large.
+        Action Taken: Year set to zero.
+--------------------------------------------------------------------------------
+ERROR 004: 
+        Step: Processing file data.
+        Information: The day number received was not within the bounds for the
+                     number of days in that month, during that year.
+        Action Taken: Album not added to file.
+--------------------------------------------------------------------------------
+ERROR 005: 
+        Step: Reading data from file.
+        Information: The AAD file specified could not be opened. Either the file
+                     does not exist, or something is wrong. 
+        Action Taken: Returns any month data collected, otherwise gives an empty
+                      list of months.
+--------------------------------------------------------------------------------
+ERROR 006: 
+        Step: Reading data from file.
+        Information: Cannot encounter a day before a month declaration in 
+                     AAD file, as the day can't be added to a month if there is
+                     no month. 
+        Action Taken: Line is skipped. 
+--------------------------------------------------------------------------------
+ERROR 007: 
+        Step: Reading data from file.
+        Information: Not enough delimiters to make a full AAD line. The lines
+                     must have at least a day, album artist, album title, and 
+                     year. 
+        Action Taken: Line is skipped.
+--------------------------------------------------------------------------------
+ERROR 008: 
+        Step: Fetching information from the internet.
+        Information: cURLpp threw an error. Check network connection.
+        Action Taken: No file is returned, and it is likely that the program 
+                      will be unable to fetch information for this album. 
+--------------------------------------------------------------------------------
+ERROR 009: 
+        Step: Writing images to disk.
+        Information: Failed to open writestream to file when downloading, check
+                     that the program has the priveleges required to write to 
+                     its current directory.
+        Action Taken: No image is written. 
+--------------------------------------------------------------------------------
+ERROR 010: 
+        Step: Getting album art.
+        Information: Not enough regex matches to get string from requested 
+                     index.
+        Action Taken: Nothing is returned. 
+--------------------------------------------------------------------------------
+ERROR 011: 
+        Step: Getting album art.
+        Information: No file extension was found on downloaded image.
+        Action Taken: The file is deleted and a new one is fetched. This is 
+                      common when Google Images returns an image URL that
+                      is actually a php script or other file that isn't an
+                      image, but will retrieve one for someone in a browser.
+--------------------------------------------------------------------------------
+ERROR 012: 
+        Step: Getting album art.
+        Information: Downloaded file was not a valid image file. There was a
+                     file extension, but it was not a JPG or PNG image.
+        Action Taken: The file is deleted and a new one is fetched.
+--------------------------------------------------------------------------------
+ERROR 013: 
+        Step: Getting album art.
+        Information: Magic number did not match for retrieved image. The magic
+                     number for the file did not match that expected from its
+                     file extension.
+        Action Taken: The file is deleted and a new one is fetched.
+--------------------------------------------------------------------------------
+ERROR 014: 
+        Step: Getting album art.
+        Information: All search result image URLs expended.
+        Action Taken: All URLs were found to be invalid (unlikely), so no image
+                      will be used for this album.
+--------------------------------------------------------------------------------
+ERROR 015: 
+        Step: Deleting file.
+        Information: Error deleting file. Check the permissions of the program
+                     to write and read from the current directory.
+        Action Taken: None, the file will remain on the disk.
+--------------------------------------------------------------------------------
+ERROR 016: 
+        Step: Drawing calendar.
+        Information: CImg threw an error.
+        Action Taken: It depends, but likely there will be some component 
+                      missing from the final calendar.
+--------------------------------------------------------------------------------
+ERROR 017: 
+        Step: Drawing calendar.
+        Information: Filename string was empty when fetching file to draw. This
+                     is unlikely to happen, but may occur if all URLs are
+                     expended.
+        Action Taken: A new image is fetched.
+--------------------------------------------------------------------------------
+ERROR 018: 
+        Step: Drawing calendar.
+        Information: Image height or width too small. If the image found is too
+                     small to look good when sized up to the requested calendar
+                     size, it is discarded in favor of another.
+        Action Taken: Image is deleted, another is fetched.
+--------------------------------------------------------------------------------
+ERROR 019: 
+        Step: Drawing calendar.
+        Information: Image aspect ratio too far from 1. If the image downloaded
+                     is not something resembling a square, it is not used, as
+                     it is likely not the album art desired.
+        Action Taken: Image is deleted, another is fetched.
+--------------------------------------------------------------------------------

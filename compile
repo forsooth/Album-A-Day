@@ -1,0 +1,8 @@
+g++ -Wall -L /lib64 -std=c++11 -O2 -g \
+-o aad album.h album.cpp month.h \
+month.cpp read_aad.h read_aad.cpp main.cpp retrieve_html.h retrieve_html.cpp \
+google_images_html.h google_images_html.cpp get_album_art.h get_album_art.cpp \
+write_imgs.h write_imgs.cpp sys_utils.h sys_utils.cpp str_utils.h \
+str_utils.cpp CImg.h \
+-lcurlpp -lcurl -lboost_regex -lpthread -lX11 \
+`Magick++-config --cppflags --cxxflags --ldflags --libs`
