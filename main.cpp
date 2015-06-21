@@ -25,17 +25,18 @@
         //              new AAD_Reader("/home/matt/Dropbox/AlbumADay/test.aad");
         //              new AAD_Reader("test.aad");
                         new AAD_Reader(file_in);
-        reader->extract_months();
-
+        std::vector<Month*> months = reader->extract_months();
+        std::cerr << "Got " << months.size() << " months." << std::endl;
         AAD_Writer *writer = new AAD_Writer();
         writer->init_canvas();
        
-        Month *m = reader->next_month();
-        writer->load_month(m);
-        
+        int i = 1;
         srand (time(NULL));
         
+        Month *m = reader->next_month();        
+        
         while(m != NULL) {
+                std::cerr << "Reading month " << i++ << "." << std::endl;
                 writer->load_month(m);
                 std::string filename = std::string();
                 filename += m->get_month_name();

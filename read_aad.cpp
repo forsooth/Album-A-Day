@@ -39,9 +39,11 @@ std::vector<Month*> AAD_Reader::extract_months()
         while (std::getline(in, line)) {
 
                 if (line.length() >= 3 && line.compare(0, 3, "END") == 0) {
-                        if (curr_month != NULL) 
+                        if (curr_month != NULL) {
                                 months.push_back(curr_month);
-                        break;
+                                curr_month = NULL;
+                        }
+                        return months;
                 }
 
                 if(line.length() == 0 || line[0] == ' ' || line[0] == '=')
@@ -62,8 +64,10 @@ std::vector<Month*> AAD_Reader::extract_months()
                          * end of a month, so we push the current month to 
                          * storage and fetch a new line to begin a new month.
                          */
-                        if (curr_month) 
+                        if (curr_month) {
                                 months.push_back(curr_month);
+                                curr_month = NULL;
+                        }
 
                         std::getline(in, line);
                         std::vector<std::string> month_data;
@@ -182,7 +186,11 @@ std::vector<Month*> AAD_Reader::extract_months()
                         
         }
 
-        if (curr_month != NULL) 
+        /* 
+         * Note: this bit only works if the month has not been added 
+         * on all breaks up above. Make sure that stays invariant.
+         */
+        if (curr_month != NULL)
                 months.push_back(curr_month);
 
         in.close();
