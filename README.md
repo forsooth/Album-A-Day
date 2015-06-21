@@ -75,4 +75,5 @@ Be warned!
 - Make error messages break at 80 columns
 - Make images showing calendar measurement variables
 - Write copy constructor/=overload for some objects
+- makefile?
 
