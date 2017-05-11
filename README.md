@@ -4,6 +4,10 @@ Calendar creation tool for those listening to one album per day, on a schedule.
 #### Introduction
 My friend began a musical adventure several months ago, during which he has listened to one full album every day. He writes out the album lists and creates calendars for himself by hand in MS Paint for quick reference. I also like music, and began to follow in his footsteps a few days ago. However I ran into the snag that I really dislike doing rote tasks when I know they could be done programatically. With this, it should only take a few seconds to make a new calendar each month, for the two of us and also for any people interested by the music or the code.
 
+#### Example Output
+
+![Example calendar from program output](/img/example_output.jpg?raw=true)
+
 #### Usage
 The program is run from the command line, with one expected argument. If the program is compiled to the executable "`aad`" (album a day), on a file "`album_list.aad`", the expected command is `./aad album_list.aad`
 
